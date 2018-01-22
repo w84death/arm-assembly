@@ -17,7 +17,7 @@ escape: .string "\n\n\nCongratulation! You escaped the cave!! \n\n\nThank you fo
 
 .text
 .global _start
-.global turn: .word turn_counter
+turn: .word turn_counter
 
 _start:
 	MOV R0, #1		    @ monitor
