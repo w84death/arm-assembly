@@ -1,12 +1,21 @@
+@ ---------------------------------------------------
+@
+@   Raspberry Pi Assembly GAME#1 by KJ/P1X
+@   
+@   http://p1x.in | http://krzysztofjankowski.com
+@   https://github.com/w84death/arm-assembly        
+@
+@ ---------------------------------------------------
 .arm
+
 .data
 input: .ascii " "
 prompt: .string "(l,r,f,b,q)-> "
-wrong: .string "(Unknown command)"
-left: .word 0xa0a0a6c
-right: .word 0xa0a0a72
-forward: .word 0xa0a0a66
-back: .word 0xa0a0a62
+unknown: .string "\n(Unknown command)\n"
+left: .word 0x2c6c286c
+right: .word 0x2c6c2872
+forward: .word 0x2c6c2866
+back: .word 0x2c6c2862
 quit: .word 0xa0a0a71
 
 .text
@@ -34,17 +43,22 @@ _prompt:
 	LDR R3, =right
 	LDR R3, [R3]
 
+	LDR R4, =quit
+	LDR R4, [R4]
+
 	CMP R1, R2
 	BEQ _left
 	CMP R1, R3
 	BEQ _right
+	CMP R1, R4
+	BEQ _end
 
-	B _wrong
+	B _unknown
 
-_wrong:
+_unknown:
 	MOV R0, #1
-	LDR R1, =prompt
-	MOV R2, #17
+	LDR R1, =unknown
+	MOV R2, #18
 	MOV R7, #4
 	SWI 0
 

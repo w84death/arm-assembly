@@ -8,24 +8,16 @@
 @ ---------------------------------------------------
 .arm
 .data
-welcome: .string "\nYou are in a relatevely samall room. You see two exits. You can choose (l)eft or (r)ight. \n"
+welcome: .string "\nYou enter another cave. This one is smaller. You see spider crawling next to you. Spider jumps on to your head and bite you right in the neck.\n"
 
 .text
-.global _room1
+.global _room2
 
-_room1:
+_room2:
 	MOV R0, #1
 	LDR R1, =welcome
-	MOV R2, #82
+	MOV R2, #145
 	MOV R7, #4
 	SWI 0
 
-    BL _prompt
-    CMP R0, #1
-    BEQ _room2
-    CMP R0, #2
-    BEQ _room3
-
-    B _room1
-
-    BX LR
+    B _end
