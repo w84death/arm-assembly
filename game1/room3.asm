@@ -8,15 +8,23 @@
 @ ---------------------------------------------------
 .arm
 .data
-welcome: .string "\nYou are in a relatevely samall room. You see no exits here. You can choose back to room1 going (l)eft.\n"
+title: .string "--- Empty cave ---\n"
+welcome: .string "\nYou are in a relatevely samall cave.\nYou see no exits here.\nYou can back by going (l)eft.\n"
 
 .text
 .global _room3
 
 _room3:
+
+	MOV R0, #1
+	LDR R1, =title
+	MOV R2, #17
+	MOV R7, #4
+	SWI 0
+	
 	MOV R0, #1
 	LDR R1, =welcome
-	MOV R2, #105
+	MOV R2, #92
 	MOV R7, #4
 	SWI 0
 

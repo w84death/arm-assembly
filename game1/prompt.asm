@@ -10,13 +10,13 @@
 
 .data
 input: .ascii " "
-prompt: .string "(l,r,f,b,q)-> "
-unknown: .string "\n(Unknown command)\n"
+prompt: .string "-> "
+unknown: .string "\nYou rested for one turn.\n"
 left: .word 0x2c6c286c
 right: .word 0x2c6c2872
 forward: .word 0x2c6c2866
 back: .word 0x2c6c2862
-quit: .word 0xa0a0a71
+quit: .word 0x2c6c2871
 
 .text
 .global _prompt
@@ -24,7 +24,7 @@ quit: .word 0xa0a0a71
 _prompt:
 	MOV R0, #1			@ monitor
 	LDR R1, =prompt
-	MOV R2, #14			@ length
+	MOV R2, #3			@ length
 	MOV R7, #4			@ write
 	SWI 0
 
@@ -52,13 +52,12 @@ _prompt:
 	BEQ _right
 	CMP R1, R4
 	BEQ _end
-
 	B _unknown
 
 _unknown:
 	MOV R0, #1
 	LDR R1, =unknown
-	MOV R2, #18
+	MOV R2, #27
 	MOV R7, #4
 	SWI 0
 
