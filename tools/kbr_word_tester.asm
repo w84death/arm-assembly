@@ -49,7 +49,7 @@ _loop:
     LDR R3, [R2, R0]
 	CMP R1, R3
 	BEQ _success
-	ADD R0, #4
+	ADDNE R0, #4
 	BNE _loop
 	
 _success:

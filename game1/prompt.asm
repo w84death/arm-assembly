@@ -9,14 +9,21 @@
 .arm
 
 .data
-input: .string " "
-prompt: .string "-> "
-unknown: .string "\nYou rested for one turn.\n"
-left: .string "l" @6c
-right: .string "r" @72
-forward: .string "f"
-back: .string "b"
-quit: .string "q" @71
+.align 16
+input:      
+    .ascii "1234567812345678"
+.align 4
+commands:
+    .ascii "quit"   @ 0
+    .ascii "left"   @ 4
+    .ascii "righ"   @ 8
+    .ascii "back"   @ 12
+    .ascii "forw"   @ 16
+    .ascii "info"   @ 20
+prompt: 
+    .string "-> "
+unknown: 
+    .string "\nYou rested for one turn.\n"
 
 
 .text
@@ -31,33 +38,30 @@ _prompt:
 
 	MOV R0, #0			@ keyboard
 	LDR R1, =input
-	MOV R2, #1 			@ length
+	MOV R2, #16         @ length
 	MOV R7, #3			@ read
 	SWI 0
 
-	LDR R1, =input
+_testing:
+    
+    MOV R0, #0
+    LDR R1, =input
 	LDR R1, [R1]
-
-	LDR R2, =left
-	LDR R2, [R2]
-
-	LDR R3, =right
-	LDR R3, [R3]
-
-	LDR R4, =quit
-	LDR R4, [R4]
-
-	TST R1, R2
-	MOV R0, #1
-	MOV PC, LR
+	LDR R2, =commands
 	
-	TST R1, R3
-	MOV R0, #2
-    @BX LR
-    MOV PC, LR
+_loop:	
+    LDR R3, [R2, R0]
+	CMP R1, R3
+	BEQ _success
+	CMP R0, #24    
+    ADDNE R0, #4
+	BNE _loop
+	BGE _unknown
 	
-	TST R1, R4
-	BEQ _end
+_success:
+    CMP R0, #0
+    BEQ _game_over
+	BX LR
     
 _unknown:
 	MOV R0, #1
@@ -67,4 +71,3 @@ _unknown:
 	SWI 0
 
     B _prompt
-	

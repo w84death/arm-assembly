@@ -8,23 +8,17 @@
 @ ---------------------------------------------------
 .arm
 .data
-title: .string "--- Spider cave ---\n"
-welcome: .string "\nYou enter another cave. This one is smaller.\nYou see spider crawling next to you.\nSpider jumps on to your head and bite you right in the neck...\n"
+title: .string "\n--- Spider cave ---\n"
+welcome: .string "You enter another cave. This one is smaller.\nYou see spider crawling next to you.\nSpider jumps on to your head and bite you right in the neck...\n"
 
 .text
 .global _room2
 
 _room2:
-	MOV R0, #1
-	LDR R1, =title
-	MOV R2, #19
-	MOV R7, #4
-	SWI 0
-	
-	MOV R0, #1
-	LDR R1, =welcome
-	MOV R2, #147
-	MOV R7, #4
-	SWI 0
+    LDR R1, =title
+    MOV R2, #22
+    LDR R3, =welcome
+    MOV R4, #146
+    BL _ui_room
 
-    B _end
+    B _game_over

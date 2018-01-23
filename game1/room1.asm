@@ -8,31 +8,23 @@
 @ ---------------------------------------------------
 .arm
 .data
-title: .string "--- Main cave ---\n"
-welcome: .string "\nYou are in a relatevely samall cave.\nYou see two exits.\nYou can choose (l)eft or (r)ight.\n"
+title: .string "\n--- Main cave ---\n"
+welcome: .string "You are in a relatevely samall cave.\nYou see two exits.\nYou can choose (l)eft or (r)ight.\n"
 
 .text
 .global _room1
 
 _room1:
-	MOV R0, #1
-	LDR R1, =title
-	MOV R2, #19
-	MOV R7, #4
-	SWI 0
-	
-	MOV R0, #1
-	LDR R1, =welcome
-	MOV R2, #92
-	MOV R7, #4
-	SWI 0
+    LDR R1, =title
+    MOV R2, #20
+    LDR R3, =welcome
+    MOV R4, #91
+    BL _ui_room
 
     BL _prompt
-    TST R0, #1
+    CMP R0, #4
     BEQ _room2
-    TST R0, #2
+    CMP R0, #8
     BEQ _room3
 
     B _room1
-
-    BX LR
