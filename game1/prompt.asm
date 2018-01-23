@@ -42,8 +42,6 @@ _prompt:
 	MOV R7, #3			@ read
 	SWI 0
 
-_testing:
-    
     MOV R0, #0
     LDR R1, =input
 	LDR R1, [R1]
