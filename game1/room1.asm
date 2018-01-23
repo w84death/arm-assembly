@@ -15,7 +15,6 @@ welcome: .string "\nYou are in a relatevely samall cave.\nYou see two exits.\nYo
 .global _room1
 
 _room1:
-
 	MOV R0, #1
 	LDR R1, =title
 	MOV R2, #19
@@ -29,9 +28,9 @@ _room1:
 	SWI 0
 
     BL _prompt
-    CMP R0, #1
+    TST R0, #1
     BEQ _room2
-    CMP R0, #2
+    TST R0, #2
     BEQ _room3
 
     B _room1

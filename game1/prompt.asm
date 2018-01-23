@@ -9,14 +9,15 @@
 .arm
 
 .data
-input: .ascii " "
+input: .string " "
 prompt: .string "-> "
 unknown: .string "\nYou rested for one turn.\n"
-left: .word 0x2c6c286c
-right: .word 0x2c6c2872
-forward: .word 0x2c6c2866
-back: .word 0x2c6c2862
-quit: .word 0x2c6c2871
+left: .string "l" @6c
+right: .string "r" @72
+forward: .string "f"
+back: .string "b"
+quit: .string "q" @71
+
 
 .text
 .global _prompt
@@ -46,14 +47,18 @@ _prompt:
 	LDR R4, =quit
 	LDR R4, [R4]
 
-	CMP R1, R2
-	BEQ _left
-	CMP R1, R3
-	BEQ _right
-	CMP R1, R4
+	TST R1, R2
+	MOV R0, #1
+	MOV PC, LR
+	
+	TST R1, R3
+	MOV R0, #2
+    @BX LR
+    MOV PC, LR
+	
+	TST R1, R4
 	BEQ _end
-	B _unknown
-
+    
 _unknown:
 	MOV R0, #1
 	LDR R1, =unknown
@@ -61,12 +66,5 @@ _unknown:
 	MOV R7, #4
 	SWI 0
 
-	B _prompt
-
-_left:
-	MOV R0, #1
-	BX LR
-
-_right:
-	MOV R0, #2
-    BX LR
+    B _prompt
+	

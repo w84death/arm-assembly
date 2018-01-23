@@ -15,7 +15,6 @@ welcome: .string "\nYou are in a relatevely samall cave.\nYou see no exits here.
 .global _room3
 
 _room3:
-
 	MOV R0, #1
 	LDR R1, =title
 	MOV R2, #17

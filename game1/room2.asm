@@ -15,7 +15,6 @@ welcome: .string "\nYou enter another cave. This one is smaller.\nYou see spider
 .global _room2
 
 _room2:
-
 	MOV R0, #1
 	LDR R1, =title
 	MOV R2, #19
