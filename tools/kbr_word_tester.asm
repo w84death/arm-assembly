@@ -1,18 +1,15 @@
 .arm
-
 .data
-.balign 16
-input: 
-    .ascii " "
-.balign 16
+.align 16
+input:      
+    .ascii "1234567812345678"
+.align 4
 commands:
     .ascii "quit"
     .ascii "left"
-    .ascii "right"
+    .ascii "righ"
     .ascii "back"
     .ascii "forw"
-
-
 welcome: 
     .string "Welcome,\nyou can use <left>, <right> or <quit> to terminate the program. Have fun.\n"
 success: 
@@ -35,43 +32,33 @@ _start:
 _input:	
 	MOV R0, #0			@ keyboard
 	LDR R1, =input
-	MOV R2, #16	        @ length
+	MOV R2, #16         @ length
 	MOV R7, #3			@ read
 	SWI 0
 	
-
-    
 _testing:
-    LDR R0, =input
-	LDR R0, [R0]
-	LDR R1, =commands
-
-    LDR R2, [R1]
-	CMP R0, R2
-	BEQ _end
-	 
-	LDR R2, [R1, #4]
-	CMP R0, R2
-	BEQ _success
+    
+    MOV R0, #0
+    LDR R1, =input
+	LDR R1, [R1]
+	LDR R2, =commands
 	
-    LDR R2, [R1, #8]
-	CMP R0, R2
+_loop:	
+    CMP R0, #24
+    BGE _fail
+    LDR R3, [R2, R0]
+	CMP R1, R3
 	BEQ _success
-	
-	LDR R2, [R1, #12]
-	CMP R0, R2
-	BEQ _success
-	
-	LDR R2, [R1, #16]
-	CMP R0, R2
-	BEQ _success
-	
-	B _fail
+	ADD R0, #4
+	BNE _loop
 	
 _success:
+    CMP R0, #0
+    BEQ _end
+
 	MOV R0, #1			@ keyboard
 	LDR R1, =success
-	MOV R2, #10 			@ length
+	MOV R2, #10 		@ length
 	MOV R7, #4			@ write
 	SWI 0
 	
