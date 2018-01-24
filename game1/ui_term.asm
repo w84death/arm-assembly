@@ -22,7 +22,6 @@ color_blue:
 color_white:
     .ascii "\033[31m"       @ 32 - white
 
-
 .text
 .global _ui_term
 

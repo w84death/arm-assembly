@@ -21,10 +21,11 @@ _room1:
     MOV R4, #86
     BL _ui_room
 
+    MOV R1, #0xc
     BL _prompt
-    CMP R0, #4
+    CMP R0, #0x4
     BEQ _room2
-    CMP R0, #8
+    CMP R0, #0x8
     BEQ _room3
 
     B _room1
