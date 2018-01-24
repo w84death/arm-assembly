@@ -8,22 +8,34 @@
 @ ---------------------------------------------------
 .arm
 .data
-title: .string "\n--- Empty cave ---\n"
-welcome: .string "You are in a relatevely samall cave.\nYou see no exits here.\nYou can back by going [west].\n"
+welcome: .string "\nYou came to the - Empty Cave -\n"
+description: .string "This cave is an ordynary one. You see a lot of stalagmits ..but no exits here.\nYou can back by going [west].\n"
 
 .text
 .global _room3
 
 _room3:
-    LDR R1, =title
-    MOV R2, #21
-    LDR R3, =welcome
-    MOV R4, #90
-    BL _ui_room
+    LDR R1, =welcome
+    MOV R2, #32
+    MOV R3, #9              @ clear screen + green
+    BL  _ui_room
 
-    MOV R1, #0x4
-    BL _prompt
+_skip_welcome:
+    MOV R1, #34             @ west/look
+    BL  _prompt
+
     CMP R0, #0x4
-    BEQ _room1
+    BEQ _room1              @ room1 ->
 
-    B _room3
+    CMP R0, #0x14
+    BEQ _look               @ look
+
+    B   _skip_welcome
+
+_look:
+    LDR R1, =description
+    MOV R2, #109
+    MOV R3, #16             @ blue
+    BL  _ui_room
+
+    B   _skip_welcome

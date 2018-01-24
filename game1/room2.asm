@@ -1,24 +1,40 @@
 @ ---------------------------------------------------
 @
 @   Raspberry Pi Assembly GAME#1 by KJ/P1X
-@   
+@
 @   http://p1x.in | http://krzysztofjankowski.com
-@   https://github.com/w84death/arm-assembly        
+@   https://github.com/w84death/arm-assembly
 @
 @ ---------------------------------------------------
 .arm
 .data
-title: .string "\n--- Spider cave ---\n"
-welcome: .string "You enter another cave. This one is smaller.\nYou see spider crawling next to you.\nSpider jumps on to your head and bite you right in the neck...\n"
+welcome: .string "\nThis particular cave is named - Old Spider - guess why?\n"
+description: .string "You enter another cave. This one is smaller.\nYou see spider crawling next to you.\nSpider jumps on to your head and bite you right in the neck...\n"
 
 .text
 .global _room2
 
 _room2:
-    LDR R1, =title
-    MOV R2, #22
-    LDR R3, =welcome
-    MOV R4, #146
-    BL _ui_room
+    LDR R1, =welcome
+    MOV R2, #57
+    MOV R3, #9              @ clear screen + green
+    BL  _ui_room
 
-    B _game_over
+    MOV R1, #36             @ east/look
+    BL  _prompt
+
+    CMP R0, #0x8
+    BEQ _room1              @ room1 ->
+
+    CMP R0, #0x14
+    BEQ _look               @ look
+
+    B   _room2
+
+_look:
+    LDR R1, =description
+    MOV R2, #145
+    MOV R3, #16             @ blue
+    BL  _ui_room
+
+    B   _game_over

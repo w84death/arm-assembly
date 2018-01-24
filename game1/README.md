@@ -9,7 +9,22 @@
 @ ---------------------------------------------------
 ```
 
+# ToDo (prioritized):
+
+- refactor ui_term (code duplication)
+- ability to win!
+- turn system!
+- torch system (light/dark)
+- better visuals (128 ascii art)
+- triggers (on X turn)
+- ansii art support?
+
+# Change Log:
+
+- [look] command
+
 # Implemented so far:
+
 - start/quit
 - rooms
 - text commands
@@ -18,15 +33,6 @@
 -- colors/cls sub-rutines
 - help
 - ability to game over
-
-# ToDo (prioritized):
-- [look] command
-- ability to win!
-- turn system!
-- torch system (light/dark)
-- better visuals (128 ascii art)
-- triggers (on X turn)
-- ansii art support?
 
 # Ideas:
 

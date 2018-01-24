@@ -10,15 +10,15 @@
 
 .data
 
-.align 4
-commands:
-    .ascii "quit"   @ #0x0
-    .ascii "west"   @ #0x4
-    .ascii "east"   @ #0x8
-    .ascii "nort"   @ #0xc
-    .ascii "sout"   @ #0x14
-    .ascii "look"   @ #0x18
-    .ascii "help"   @ #0x1c
+.align 16
+commands:			@ mem.	mask
+    .ascii "quit"   @ #0x0	1
+    .ascii "west"   @ #0x4	2
+    .ascii "east"   @ #0x8	4
+    .ascii "nort"   @ #0xc	8
+    .ascii "sout"   @ #0x10	16
+    .ascii "look"   @ #0x14	32
+    .ascii "help"   @ #0x18	64
 
 .align 16
 input: .ascii "1234567812345678"
@@ -49,25 +49,34 @@ _prompt_again:
     LDR R1, =input
 	LDR R1, [R1]
 	LDR R2, =commands
+	MOV R4, #0
+	MOV R5, #1
+	MOV R6, #2
 
 _loop:
     LDR R3, [R2, R0]
 	CMP R1, R3
 	BEQ _success
-	CMP R0, #28				@ cmd_length
-    ADDNE R0, #0x4
-	BNE _loop
+	CMP R0, #0x1c				@ max commands
 	BGE _unknown
 
+    ADD R0, #0x4
+	MUL R4, R5, R6
+	MOV R5, R4
+
+	B _loop
+
+
 _success:
-    CMP R0, #0x0
+    CMP R0, #0x0			@ game over ->
     BEQ _game_over
-    CMP R0, #24
+
+	CMP R0, #0x18			@ help ->
     BEQ _show_help
 
-	POP {R1}				@ restore bit mask
-	AND R2, R0, R1
-	CMP R2, R0
+	POP {R1}			@ restore bit mask
+	AND R2, R4, R1
+	CMP R2, R4
 	BNE _unavailable		@ command not available
 
 	BX LR
@@ -75,7 +84,7 @@ _success:
 _unknown:
 	MOV R0, #1
 	LDR R1, =unknown
-	MOV R2, #27
+	MOV R2, #26
 	MOV R7, #4
 	SWI 0
 

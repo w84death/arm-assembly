@@ -1,9 +1,9 @@
 @ ---------------------------------------------------
 @
 @   Raspberry Pi Assembly GAME#1 by KJ/P1X
-@   
+@
 @   http://p1x.in | http://krzysztofjankowski.com
-@   https://github.com/w84death/arm-assembly        
+@   https://github.com/w84death/arm-assembly
 @
 @ ---------------------------------------------------
 .arm
@@ -16,11 +16,10 @@ game_over:
 .global _game_over
 
 _game_over:
-	MOV R0, #1
-	LDR R1, =game_over
-	MOV R2, #83
-	MOV R7, #4
-	SWI 0
+    LDR R1, =game_over
+    MOV R2, #83
+    MOV R3, #4             @ red
+    BL  _ui_room
 
     MOV R7, #1
     SWI 0
