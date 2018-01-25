@@ -9,7 +9,7 @@
 .arm
 .data
 welcome: .string "\nThis particular cave is named - Old Spider - guess why?\n"
-description: .string "\nYou enter another cave. This one is smaller.\nYou see spider crawling next to you..\nThere is a path but the spider is looking dangerous.\n"
+description: .string "\nYou enter another cave. This one is smaller.\nYou see spider crawling next to you..\nThere is a path on [west] site but the spider is looking dangerous.\n"
 description2: .string "\nThe spider has gone. You see path on the [west] site.\n"
 spider_attack: .string "\nSpider jumps on to your head and bite you right in the neck...\n"
 .text
@@ -47,7 +47,7 @@ _look:
     BGT _post_trigger
 
     LDR R1, =description
-    MOV R2, #137
+    MOV R2, #152
     MOV R3, #16             @ blue
     BL  _ui_room
 
