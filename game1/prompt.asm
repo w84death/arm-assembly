@@ -44,7 +44,7 @@ _prompt:
 _prompt_again:
 
 	PUSH {LR}
-    BL _ui_turn
+    BL _ui_render_turn
 	POP {LR}
 
 	MOV R0, #1
@@ -104,7 +104,7 @@ _unknown:
 	LDR R1, =unknown
     MOV R2, #unknown_len
     MOV R3, #info_style
-    BL  _ui_room
+    BL  _ui_render_message
 
 	POP {LR}
     B _prompt_again
@@ -114,7 +114,7 @@ _unavailable:
 	LDR R1, =unavailable
     MOV R2, #unavailable_len
     MOV R3, #info_style
-    BL  _ui_room
+    BL  _ui_render_message
 
 	BL	_increment_turn
 
@@ -126,7 +126,7 @@ _rest:
 	LDR R1, =rest
     MOV R2, #rest_len
     MOV R3, #desc_style
-    BL  _ui_room
+    BL  _ui_render_message
 
 	BL	_increment_turn
 
@@ -138,7 +138,7 @@ _show_help:
 	LDR R1, =help
     MOV R2, #help_len
     MOV R3, #info_style
-    BL  _ui_room
+    BL  _ui_render_message
 	POP {LR}
 
     B _prompt_again

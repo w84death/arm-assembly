@@ -18,11 +18,11 @@ _exit:
     LDR R1, =welcome
     MOV R2, #32
     MOV R3, #9              @ clear screen + green
-    BL  _ui_room
+    BL  _ui_render_message
 
     LDR R1, =description
     MOV R2, #86
     MOV R3, #9              @ clear screen + green
-    BL  _ui_room
+    BL  _ui_render_message
 
     B _quit

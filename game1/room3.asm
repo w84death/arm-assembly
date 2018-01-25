@@ -25,7 +25,7 @@ _room3:
     LDR R1, =welcome
     MOV R2, #welcome_len
     MOV R3, #welcome_style
-    BL  _ui_room
+    BL  _ui_render_message
 
     BL	_increment_turn
 
@@ -45,7 +45,7 @@ _look:
     LDR R1, =description
     MOV R2, #desc_len
     MOV R3, #desc_style
-    BL  _ui_room
+    BL  _ui_render_message
 
     BL	_increment_turn
 

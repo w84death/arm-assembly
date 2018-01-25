@@ -23,12 +23,12 @@ _start:
     LDR R1, =intro
     MOV R2, #48
     MOV R3, #welcome_style
-    BL  _ui_room
+    BL  _ui_render_message
 
 	LDR R1, =welcome
 	MOV R2, #234
     MOV R3, #ui_blue
-    BL  _ui_room
+    BL  _ui_render_message
 
 	MOV R0, #0
 	LDR R1, =input

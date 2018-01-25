@@ -20,13 +20,13 @@ _game_over:
     LDR R1, =game_over
     MOV R2, #45
     MOV R3, #4             @ red
-    BL  _ui_room
+    BL  _ui_render_message
 
 _quit:
     LDR R1, =quit
     MOV R2, #29
     MOV R3, #32             @ white
-    BL  _ui_room
+    BL  _ui_render_message
 
     MOV R7, #1
     SWI 0

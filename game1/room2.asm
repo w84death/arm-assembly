@@ -32,7 +32,7 @@ _room2:
     LDR R1, =welcome
     MOV R2, #welcome_len
     MOV R3, #welcome_style
-    BL  _ui_room
+    BL  _ui_render_message
 
     BL	_increment_turn
 
@@ -62,7 +62,7 @@ _look:
     LDR R1, =description
     MOV R2, #desc_len
     MOV R3, #desc_style
-    BL  _ui_room
+    BL  _ui_render_message
 
     B   _skip_welcome
 
@@ -70,7 +70,7 @@ _post_trigger:
     LDR R1, =description2
     MOV R2, #desc2_len
     MOV R3, #desc_style
-    BL  _ui_room
+    BL  _ui_render_message
 
     B   _skip_welcome
 
@@ -82,6 +82,6 @@ _try_room4:
     LDR R1, =spider_attack
     MOV R2, #spider_len
     MOV R3, #desc_style
-    BL  _ui_room
+    BL  _ui_render_message
 
     B   _game_over

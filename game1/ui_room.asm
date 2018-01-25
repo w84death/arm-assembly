@@ -12,10 +12,10 @@
 num: .ascii " "
 
 .text
-.global _ui_room
-.global _ui_turn
+.global _ui_render_message
+.global _ui_render_turn
 
-_ui_room:
+_ui_render_message:
     PUSH {R1-R2, LR}
 
     MOV R1, R3				@ text color
@@ -32,7 +32,7 @@ _ui_room:
 	POP {LR}
 	BX LR
 
-_ui_turn:
+_ui_render_turn:
 	PUSH {LR}
 
 	BL 	_get_turn			@ R0 turn number
@@ -42,7 +42,7 @@ _ui_turn:
 
     MOV R2, #1
     MOV R3, #32             @ white
-    BL  _ui_room
+    BL  _ui_render_message
 
 	POP {LR}
 	BX LR
