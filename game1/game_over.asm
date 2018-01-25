@@ -9,16 +9,23 @@
 .arm
 
 .data
-game_over:
-    .string "\n\n\nYou did not escape. You are dead... GAME OVER. \n\n\nThank you for playing\n- P1X\n\n"
+game_over: .string "\nYou did not escape. You are dead... GAME OVER\n"
+quit: .string "\nThank you for playing,\nP1X\n\n"
 
 .text
 .global _game_over
+.global _quit
 
 _game_over:
     LDR R1, =game_over
-    MOV R2, #83
+    MOV R2, #45
     MOV R3, #4             @ red
+    BL  _ui_room
+
+_quit:
+    LDR R1, =quit
+    MOV R2, #29
+    MOV R3, #32             @ white
     BL  _ui_room
 
     MOV R7, #1

@@ -8,19 +8,30 @@
 @
 @ ---------------------------------------------------
 ```
+# About
+This game was made mainly for me to learn assemlby language. It is completely written in ARM Assembly. To make it easy I created a simple text based adventure game concept.
+
+You can only use few commands. Move thru rooms (caves in this case) and trigger diffrent scenarios. And die a lot.
+
+Episode one is placed in the cave. Player needs to escape before torch burns out. On the way player must go to each room in ideal conbination to solve the whole puzzle. Sometimes waiting in one room for few turns is advised.
+
+# How to compile
+```
+$ make
+```
 
 # ToDo (prioritized):
-- turn system!
-- ability to win!
-- refactor ui_term (code duplication)
-- turn system!
+- printing numbers subrutine
+- enter triggers / room states
+- more rooms with triggers
 - torch system (light/dark)
 - better visuals (128 ascii art)
-- triggers (on X turn)
-- ansii art support?
 
 # Change Log:
-
+- first room with turn trigger (spider)
+- ability to win! (there is an exit now)
+- turn triggers
+- turn system (counting, partial printing)
 - [look] command
 
 # Implemented so far:

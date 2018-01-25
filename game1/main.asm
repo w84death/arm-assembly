@@ -11,41 +11,32 @@
 .data
 .align 4
 turn: .word 0
-input: .string " "
+input: .string "1234567812345678"
 intro: .string "\n-- Raspberry Pi Assembly GAME#1 by KJ/P1X --\n\n"
-welcome: .string "You are in the cave.\nYou don't have any water or food.\nYou need to get out fast! you have 24 moves to get out of the cave.\n\nPRESS ENTER TO START\n"
-escape: .string "\n\n\nCongratulation! You escaped the cave!! \n\n\nThank you for playing\n- P1X\n\n"
-
+welcome: .string "You are in the cave.\nYou only have one torch that is slowly dimming.\nYou need to get out fast! you have 12 moves to get out of the cave.\n\n--------------------\nPRESS ENTER TO START \n--------------------\n"
 .text
 .global _start
 .global _increment_turn
 .global _get_turn
 
 _start:
+    LDR R1, =intro
+    MOV R2, #48
+    MOV R3, #9              @ clear screen + green
+    BL  _ui_room
 
-	MOV R0, #1		    @ monitor
-	LDR R1, =intro
-	MOV R2, #48		    @ lenghth
-	MOV R7, #4 		    @ output
-	SWI 0
-
-	MOV R0, #1		    @ monitor
 	LDR R1, =welcome
-	MOV R2, #146	    @ lenghth
-	MOV R7, #4 		    @ output
-	SWI 0
+	MOV R2, #202
+    MOV R3, #16             @ blue
+    BL  _ui_room
 
-
-	MOV R0, #0			@ keyboard
+	MOV R0, #0
 	LDR R1, =input
-	MOV R2, #1          @ length
-	MOV R7, #3			@ read
+	MOV R2, #128       		@ we dont want any garbage in the input
+	MOV R7, #3
 	SWI 0
 
-	B _room1
-
-	MOV R7, #1		    @ program exit
-	SWI 0			    @ push to terminal
+	B _room1				@ room1 ->
 
 _increment_turn:
 	LDR R1, =turn

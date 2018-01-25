@@ -76,7 +76,7 @@ _loop:
 
 _success:
     CMP R0, #0x0			@ game over ->
-    BEQ _game_over
+    BEQ _quit
 
 	CMP R0, #0x1c			@ help ->
     BEQ _show_help

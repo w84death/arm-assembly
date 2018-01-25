@@ -9,7 +9,7 @@
 .arm
 .data
 welcome: .string "\nYou are in the - Main Cave -\n"
-description: .string "You are in a relatevely samall cave.\nYou see two exits.\nYou can go [west] or [east].\n"
+description: .string "\nYou are in a relatevely samall cave.\nYou see two exits.\nYou can go [west] or [east].\n"
 
 .text
 .global _room1
@@ -40,7 +40,7 @@ _skip_welcome:
 
 _look:
     LDR R1, =description
-    MOV R2, #85
+    MOV R2, #86
     MOV R3, #16             @ blue
     BL  _ui_room
 

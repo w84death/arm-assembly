@@ -9,7 +9,7 @@
 .arm
 .data
 welcome: .string "\nYou came to the - Empty Cave -\n"
-description: .string "This cave is an ordynary one. You see a lot of stalagmits ..but no exits here.\nYou can back by going [west].\n"
+description: .string "\nThis cave is an ordynary one. You see a lot of stalagmits ..but no exits here.\nYou can back by going [west].\n"
 
 .text
 .global _room3
@@ -36,7 +36,7 @@ _skip_welcome:
 
 _look:
     LDR R1, =description
-    MOV R2, #109
+    MOV R2, #110
     MOV R3, #16             @ blue
     BL  _ui_room
     BL	_increment_turn     @ TURN++
