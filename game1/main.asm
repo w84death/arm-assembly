@@ -13,7 +13,7 @@
 turn: .word 0
 input: .string "1234567812345678"
 intro: .string "\n-- Raspberry Pi Assembly GAME#1 by KJ/P1X --\n\n"
-welcome: .string "You are in the cave.\nYou only have one torch that is slowly dimming.\nYou need to get out fast! you have 12 moves to get out of the cave.\n\nVERSION: public alpha 2 \n-----------------------\n PRESS ENTER TO START \n-----------------------\n"
+welcome: .string "You are in the cave.\nYou only have one torch that is slowly dimming.\nYou need to get out fast! you have 12 moves to get out of the cave.\n\nVERSION: public alpha 3 \n-----------------------\n PRESS ENTER TO START \n-----------------------\n"
 .text
 .global _start
 .global _increment_turn

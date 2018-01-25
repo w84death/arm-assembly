@@ -53,7 +53,7 @@ _skip_welcome:
     CMP R0, #cmd_look
     BEQ _look
 
-    B   _room2
+    B   _skip_welcome
 
 _look:
     BL	_increment_turn     @ TURN++
