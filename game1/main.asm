@@ -8,12 +8,18 @@
 @ ---------------------------------------------------
 .arm
 .include "globals.asm"
+
 .data
 .align 4
 turn: .word 0
 input: .string "1234567812345678"
-intro: .string "\n-- Raspberry Pi Assembly GAME#1 by KJ/P1X --\n\n"
-welcome: .string "You are in the cave.\nYou only have one torch that is slowly dimming.\nYou need to get out fast! you have 12 moves to get out of the cave.\n\nVERSION: public alpha 3 \n-----------------------\n PRESS ENTER TO START \n-----------------------\n"
+intro:
+.string "\n-- Raspberry Pi Assembly GAME#1 by KJ/P1X --\n\n"
+welcome:
+.string "You are in the cave.\nYou only have one torch that is slowly dimming.\nYou need to get out fast! you have 12 moves to get out of the cave.\n\nVERSION: public beta 1 \n-----------------------\n PRESS ENTER TO START \n-----------------------\n"
+.equ intro_len, 	48
+.equ welcome_len, 	233
+
 .text
 .global _start
 .global _increment_turn
@@ -21,12 +27,12 @@ welcome: .string "You are in the cave.\nYou only have one torch that is slowly d
 
 _start:
     LDR R1, =intro
-    MOV R2, #48
+    MOV R2, #intro_len
     MOV R3, #welcome_style
     BL  _ui_render_message
 
 	LDR R1, =welcome
-	MOV R2, #234
+	MOV R2, #welcome_len
     MOV R3, #ui_blue
     BL  _ui_render_message
 

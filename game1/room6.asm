@@ -10,10 +10,10 @@
 .include "globals.asm"
 
 .data
-.equ cmd_mask,          58  @ west/north/south/look
+.equ cmd_mask,          48  @ south/look
 
 welcome:
-.string "\nRoom #4\n"
+.string "\nRoom #6\n"
 description:
 .string "\nLorem Ipsum.\n"
 description2:
@@ -23,9 +23,9 @@ description2:
 .equ desc2_len,      17
 
 .text
-.global _room4
+.global _room6
 
-_room4:
+_room6:
     LDR R1, =welcome
     MOV R2, #welcome_len
     MOV R3, #welcome_style
@@ -38,14 +38,8 @@ _skip_welcome:
     MOV R1, #cmd_mask
     BL  _prompt
 
-    CMP R0, #cmd_west
-    BEQ _room5
-
-    CMP R0, #cmd_nort
-    BEQ _room6
-
     CMP R0, #cmd_sout
-    BEQ _room7
+    BEQ _room4
 
     CMP R0, #cmd_look
     BEQ _look
