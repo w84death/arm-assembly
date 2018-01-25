@@ -20,6 +20,8 @@ _room3:
     MOV R3, #9              @ clear screen + green
     BL  _ui_room
 
+    BL	_increment_turn     @ TURN++
+
 _skip_welcome:
     MOV R1, #34             @ west/look
     BL  _prompt
@@ -37,5 +39,6 @@ _look:
     MOV R2, #109
     MOV R3, #16             @ blue
     BL  _ui_room
+    BL	_increment_turn     @ TURN++
 
     B   _skip_welcome

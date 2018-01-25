@@ -10,9 +10,9 @@
 ```
 
 # ToDo (prioritized):
-
-- refactor ui_term (code duplication)
+- turn system!
 - ability to win!
+- refactor ui_term (code duplication)
 - turn system!
 - torch system (light/dark)
 - better visuals (128 ascii art)

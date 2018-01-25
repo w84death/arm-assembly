@@ -10,7 +10,7 @@
 
 .data
 
-.align 16
+.align 4
 commands:			@ mem.	mask
     .ascii "quit"   @ #0x0	1
     .ascii "west"   @ #0x4	2
@@ -18,14 +18,16 @@ commands:			@ mem.	mask
     .ascii "nort"   @ #0xc	8
     .ascii "sout"   @ #0x10	16
     .ascii "look"   @ #0x14	32
-    .ascii "help"   @ #0x18	64
+    .ascii "rest"   @ #0x18	64
+    .ascii "help"   @ #0x1c	128
 
-.align 16
+.align 4
 input: .ascii "1234567812345678"
 prompt: .string "-> "
-unknown: .string "\nYou rested for one turn.\n"
+unknown: .string "\nThis does nothing.\n"
 unavailable: .string "\nYou can not do that.\n"
-help: .string "\nYou can use those commands: [quit] [north] [south] [west] [east] [look]\n"
+rest: .string "\nYou rested for one turn. You feel refreshed.\n"
+help: .string "\nYou can use those commands: [quit] [north] [south] [west] [east] [look] [rest]\n"
 
 .text
 .global _prompt
@@ -33,6 +35,11 @@ _prompt:
 	PUSH {R1}				@ save the bit mask
 
 _prompt_again:
+
+	PUSH {LR}
+    BL _ui_turn
+	POP {LR}
+
 	MOV R0, #1
 	LDR R1, =prompt
 	MOV R2, #3
@@ -71,41 +78,60 @@ _success:
     CMP R0, #0x0			@ game over ->
     BEQ _game_over
 
-	CMP R0, #0x18			@ help ->
+	CMP R0, #0x1c			@ help ->
     BEQ _show_help
+
+	CMP R0, #0x18			@ rest ->
+    BEQ _rest
 
 	POP {R1}			@ restore bit mask
 	AND R2, R4, R1
 	CMP R2, R4
+	PUSHNE {R1}
 	BNE _unavailable		@ command not available
 
-	BX LR
+	BX 	LR
 
 _unknown:
-	MOV R0, #1
+	PUSH {LR}
 	LDR R1, =unknown
-	MOV R2, #26
-	MOV R7, #4
-	SWI 0
+    MOV R2, #20
+    MOV R3, #8              @ green
+    BL  _ui_room
 
+	POP {LR}
     B _prompt_again
 
 _unavailable:
-	PUSH {R1}			@ save bit mask again
-
-	MOV R0, #1
+	PUSH {LR}
 	LDR R1, =unavailable
-	MOV R2, #22
-	MOV R7, #4
-	SWI 0
+    MOV R2, #22
+    MOV R3, #8              @ green
+    BL  _ui_room
 
+	BL	_increment_turn		@ TURN++
+
+	POP {LR}
+    B _prompt_again
+
+_rest:
+	PUSH {LR}
+	LDR R1, =rest
+    MOV R2, #46
+    MOV R3, #16              @ blue
+    BL  _ui_room
+
+	BL	_increment_turn		@ TURN++
+
+	POP {LR}
     B _prompt_again
 
 _show_help:
-	MOV R0, #1
+	PUSH {LR}
 	LDR R1, =help
-	MOV R2, #73
-	MOV R7, #4
-	SWI 0
+    MOV R2, #80
+    MOV R3, #8              @ green
+    BL  _ui_room
+	POP {LR}
 
     B _prompt_again
