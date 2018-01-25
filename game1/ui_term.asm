@@ -7,6 +7,7 @@
 @
 @ ---------------------------------------------------
 .arm
+.include "globals.asm"
 
 .data
 clear_screen:
@@ -27,28 +28,28 @@ color_white:
 
 _ui_term:
     PUSH {LR}
-    AND R2, R1, #1
-    CMP R2, #1
+    AND R2, R1, #ui_cls
+    CMP R2, #ui_cls
     BLEQ _clear_screen
 
-    AND R2, R1, #2
-    CMP R2, #2
+    AND R2, R1, #ui_cc
+    CMP R2, #ui_cc
     BLEQ _clear_color
 
-    AND R2, R1, #4
-    CMP R2, #4
+    AND R2, R1, #ui_red
+    CMP R2, #ui_red
     BLEQ _color_red
 
-    AND R2, R1, #8
-    CMP R2, #8
+    AND R2, R1, #ui_green
+    CMP R2, #ui_green
     BLEQ _color_green
 
-    AND R2, R1, #16
-    CMP R2, #16
+    AND R2, R1, #ui_blue
+    CMP R2, #ui_blue
     BLEQ _color_blue
 
-    AND R2, R1, #32
-    CMP R2, #32
+    AND R2, R1, #ui_white
+    CMP R2, #ui_white
     BLEQ _color_white
 
     POP {LR}

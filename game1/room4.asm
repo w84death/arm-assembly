@@ -7,40 +7,51 @@
 @
 @ ---------------------------------------------------
 .arm
+.include "globals.asm"
+
 .data
-welcome: .string "\nRoom4\n"
-description: .string "\nLorem Ipsum.\n"
-description2: .string "\nDolor sid amet.\n"
+.equ cmd_mask, 63  @ west/east/north/south/look
+
+welcome:
+.string "\nRoom4\n"
+description:
+.string "\nLorem Ipsum.\n"
+description2:
+.string "\nDolor sid amet.\n"
+.equ welcome_length, 5
+.equ desc_length, 12
+.equ desc2_length, 15
+
 .text
 .global _room4
 
 _room4:
     LDR R1, =welcome
-    MOV R2, #5
-    MOV R3, #9              @ clear screen + green
+    MOV R2, #welcome_length
+    MOV R3, #welcome_style
     BL  _ui_room
 
     BL	_increment_turn     @ TURN++
 
 _skip_welcome:
 
-    MOV R1, #63             @ west/east/north/south/look
+    MOV R1, #cmd_mask
     BL  _prompt
 
-    @ CMP R0, #0x4
-    @ BEQ _room5             @ room5 (danger) ->
+    @ CMP R0, #west
+    @ BEQ _room5
 
-    CMP R0, #0x8
-    BEQ _room2              @ room2 (spider) ->
+    CMP R0, #cmd_east
+    BEQ _room2
 
-    @ CMP R0, #0x10
-    @ BEQ _room7             @ _room7 (water) ->
+    @ CMP R0, #cmd_north
+    @ BEQ _room6
 
-    @ CMP R0, #0xc
-    @ BEQ _room6             @ _room6 (plank) ->
+    @ CMP R0, #cmd_south
+    @ BEQ _room7
 
-    CMP R0, #0x14
-    BEQ _look               @ look
+    CMP R0, #cmd_look
+    BEQ _look
 
     B   _room2
 
@@ -53,16 +64,16 @@ _look:
     @ BGT _post_trigger
 
     LDR R1, =description
-    MOV R2, #12
-    MOV R3, #16             @ blue
+    MOV R2, #desc_length
+    MOV R3, #desc_style
     BL  _ui_room
 
     B   _skip_welcome
 
 _post_trigger:
     LDR R1, =description2
-    MOV R2, #15
-    MOV R3, #16             @ blue
+    MOV R2, #desc2_length
+    MOV R3, #desc_style
     BL  _ui_room
 
     B   _skip_welcome

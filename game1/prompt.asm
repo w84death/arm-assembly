@@ -7,10 +7,10 @@
 @
 @ ---------------------------------------------------
 .arm
+.include "globals.asm"
 
 .data
-
-.align 4
+.align
 commands:			@ mem.	mask
     .ascii "quit"   @ #0x0	1
     .ascii "west"   @ #0x4	2
@@ -20,19 +20,26 @@ commands:			@ mem.	mask
     .ascii "look"   @ #0x14	32
     .ascii "rest"   @ #0x18	64
     .ascii "help"   @ #0x1c	128
+.equ commands_len, 0x1c
 
-.align 4
+.align
 input: .ascii "1234567812345678"
+.equ input_len, 16
 prompt: .string "-> "
+.equ prompt_len, 3
 unknown: .string "\nThis does nothing.\n"
+.equ unknown_len, 20
 unavailable: .string "\nYou can not do that.\n"
+.equ unavailable_len, 22
 rest: .string "\nYou rested for one turn. You feel refreshed.\n"
+.equ rest_len, 46
 help: .string "\nYou can use those commands: [quit] [north] [south] [west] [east] [look] [rest]\n"
+.equ help_len, 80
 
 .text
 .global _prompt
 _prompt:
-	PUSH {R1}				@ save the bit mask
+	PUSH {R1}
 
 _prompt_again:
 
@@ -42,13 +49,13 @@ _prompt_again:
 
 	MOV R0, #1
 	LDR R1, =prompt
-	MOV R2, #3
+	MOV R2, #prompt_len
 	MOV R7, #4
 	SWI 0
 
 	MOV R0, #0
 	LDR R1, =input
-	MOV R2, #16
+	MOV R2, #input_len
 	MOV R7, #3
 	SWI 0
 
@@ -64,7 +71,7 @@ _loop:
     LDR R3, [R2, R0]
 	CMP R1, R3
 	BEQ _success
-	CMP R0, #0x1c				@ max commands
+	CMP R0, #commands_len
 	BGE _unknown
 
     ADD R0, #0x4
@@ -75,28 +82,28 @@ _loop:
 
 
 _success:
-    CMP R0, #0x0			@ game over ->
+    CMP R0, #cmd_quit
     BEQ _quit
 
-	CMP R0, #0x1c			@ help ->
+	CMP R0, #cmd_help
     BEQ _show_help
 
-	CMP R0, #0x18			@ rest ->
+	CMP R0, #cmd_rest
     BEQ _rest
 
-	POP {R1}			@ restore bit mask
+	POP {R1}
 	AND R2, R4, R1
 	CMP R2, R4
 	PUSHNE {R1}
-	BNE _unavailable		@ command not available
+	BNE _unavailable
 
 	BX 	LR
 
 _unknown:
 	PUSH {LR}
 	LDR R1, =unknown
-    MOV R2, #20
-    MOV R3, #8              @ green
+    MOV R2, #unknown_len
+    MOV R3, #info_style
     BL  _ui_room
 
 	POP {LR}
@@ -105,11 +112,11 @@ _unknown:
 _unavailable:
 	PUSH {LR}
 	LDR R1, =unavailable
-    MOV R2, #22
-    MOV R3, #8              @ green
+    MOV R2, #unavailable_len
+    MOV R3, #info_style
     BL  _ui_room
 
-	BL	_increment_turn		@ TURN++
+	BL	_increment_turn
 
 	POP {LR}
     B _prompt_again
@@ -117,11 +124,11 @@ _unavailable:
 _rest:
 	PUSH {LR}
 	LDR R1, =rest
-    MOV R2, #46
-    MOV R3, #16              @ blue
+    MOV R2, #rest_len
+    MOV R3, #desc_style
     BL  _ui_room
 
-	BL	_increment_turn		@ TURN++
+	BL	_increment_turn
 
 	POP {LR}
     B _prompt_again
@@ -129,8 +136,8 @@ _rest:
 _show_help:
 	PUSH {LR}
 	LDR R1, =help
-    MOV R2, #80
-    MOV R3, #8              @ green
+    MOV R2, #help_len
+    MOV R3, #info_style
     BL  _ui_room
 	POP {LR}
 

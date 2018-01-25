@@ -42,6 +42,8 @@ $ ./game
 - better visuals (128 ascii art)
 
 # Change Log:
+- refactor rooms code
+- global variables for all subrutines
 - first room with turn trigger (spider)
 - ability to win! (there is an exit now)
 - turn triggers

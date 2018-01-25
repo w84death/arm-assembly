@@ -7,9 +7,16 @@
 @
 @ ---------------------------------------------------
 .arm
+.include "globals.asm"
+
 .data
-welcome: .string "\nYou are in the - Main Cave -\n"
-description: .string "\nYou are in a relatevely samall cave.\nYou see two exits.\nYou can go [west] or [east].\n"
+.equ cmd_mask,      38  @ west/east/look
+welcome:
+.string "\nYou are in the - Main Cave -\n"
+description:
+.string "\nYou are in a relatevely samall cave.\nYou see two exits.\nYou can go [west] or [east].\n"
+.equ welcome_len,   30
+.equ desc_len,      86
 
 .text
 .global _room1
@@ -17,33 +24,33 @@ description: .string "\nYou are in a relatevely samall cave.\nYou see two exits.
 _room1:
 
     LDR R1, =welcome
-    MOV R2, #30
-    MOV R3, #9              @ clear screen + green
+    MOV R2, #welcome_len
+    MOV R3, #welcome_style
     BL  _ui_room
 
-    BL	_increment_turn     @ TURN++
+    BL	_increment_turn
 
 _skip_welcome:
-    MOV R1, #38             @ west/east/look
+    MOV R1, #cmd_mask
     BL  _prompt
 
-    CMP R0, #0x4
-    BEQ _room2              @ room2 ->
+    CMP R0, #cmd_west
+    BEQ _room2
 
-    CMP R0, #0x8
-    BEQ _room3              @ room3 ->
+    CMP R0, #cmd_east
+    BEQ _room3
 
-    CMP R0, #0x14
-    BEQ _look               @ look
+    CMP R0, #cmd_look
+    BEQ _look
 
     B   _skip_welcome
 
 _look:
     LDR R1, =description
-    MOV R2, #86
-    MOV R3, #16             @ blue
+    MOV R2, #desc_len
+    MOV R3, #desc_style
     BL  _ui_room
 
-	BL	_increment_turn     @ TURN++
+	BL	_increment_turn
 
     B   _skip_welcome
