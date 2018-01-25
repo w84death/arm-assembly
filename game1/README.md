@@ -16,6 +16,7 @@ You can only use few commands. Move thru rooms (caves in this case) and trigger 
 Episode one is placed in the cave. Player needs to escape before torch burns out. On the way player must go to each room in ideal conbination to solve the whole puzzle. Sometimes waiting in one room for few turns is advised.
 
 # How to compile
+Use real ARM hardware like any of the Raspberry Pi. Or setup a QEMU device (this is not easy).
 ```
 $ make
 ```
