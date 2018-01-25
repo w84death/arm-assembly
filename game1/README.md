@@ -20,10 +20,18 @@ Episode one is placed in the cave. Player needs to escape before torch burns out
 
 ![gameplay](https://i.imgur.com/ZMcM9Qn.png)
 
+# Download Pulic Alpha:
+- [ARM Alpha1](https://github.com/w84death/arm-assembly/raw/master/game1/game_arm_alpha1)
 # How to compile
 Use real ARM hardware like any of the Raspberry Pi. Or setup a QEMU device (this is not easy).
 ```
 $ make
+```
+
+# Run
+```
+$ chmod +x game
+$ ./game
 ```
 
 # ToDo (prioritized):
