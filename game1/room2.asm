@@ -34,7 +34,7 @@ _room2:
     MOV R3, #welcome_style
     BL  _ui_room
 
-    BL	_increment_turn     @ TURN++
+    BL	_increment_turn
 
 _skip_welcome:
 
@@ -42,18 +42,18 @@ _skip_welcome:
     BL  _prompt
 
     CMP R0, #cmd_west
-    BEQ _try_room4          @ room4 ->
+    BEQ _try_room4
 
     CMP R0, #cmd_sout
-    BEQ _room1              @ room1 ->
+    BEQ _room1
 
     CMP R0, #cmd_look
-    BEQ _look               @ look
+    BEQ _look
 
     B   _skip_welcome
 
 _look:
-    BL	_increment_turn     @ TURN++
+    BL	_increment_turn
 
     BL  _get_turn
     CMP R0, #trigger_turn
@@ -77,8 +77,7 @@ _post_trigger:
 _try_room4:
     BL  _get_turn
     CMP R0, #trigger_turn
-    @BGT _room4              @ spider is gone, room4 ->
-    BGT _exit                @ BETA VERSION: cave exit ->
+    BGT _room4
 
     LDR R1, =spider_attack
     MOV R2, #spider_len

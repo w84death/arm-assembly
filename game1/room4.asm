@@ -10,7 +10,7 @@
 .include "globals.asm"
 
 .data
-.equ cmd_mask, 63  @ west/east/north/south/look
+.equ cmd_mask,          63  @ west/east/north/south/look
 
 welcome:
 .string "\nRoom4\n"
@@ -18,9 +18,9 @@ description:
 .string "\nLorem Ipsum.\n"
 description2:
 .string "\nDolor sid amet.\n"
-.equ welcome_length, 5
-.equ desc_length, 12
-.equ desc2_length, 15
+.equ welcome_length,    5
+.equ desc_length,       12
+.equ desc2_length,      15
 
 .text
 .global _room4
@@ -31,7 +31,7 @@ _room4:
     MOV R3, #welcome_style
     BL  _ui_room
 
-    BL	_increment_turn     @ TURN++
+    BL	_increment_turn
 
 _skip_welcome:
 
@@ -56,7 +56,7 @@ _skip_welcome:
     B   _skip_welcome
 
 _look:
-    BL	_increment_turn     @ TURN++
+    BL	_increment_turn
 
     @ BL  _get_room_triggers
     @ AND R0, R1
