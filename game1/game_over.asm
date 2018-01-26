@@ -14,7 +14,7 @@ game_over:
 .string "\nYou did not escape. You are dead... GAME OVER\n"
 quit:
 .string "\nThank you for playing,\nP1X\n\n"
-.equ over_len,      45
+.equ over_len,      47
 .equ quit_len,      29
 
 .text
