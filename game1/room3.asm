@@ -12,20 +12,20 @@
 .data
 .equ cmd_mask,      34   @ west/look
 welcome:
-.string "\nYou came to the - Empty Cave -\n"
+.string "You came to the - Empty Cave -\n"
 description:
 .string "\nThis cave is an ordynary one. You see a lot of stalagmits ..but no exits here.\nYou can back by going [west].\n"
-.equ welcome_len,   32
+.equ welcome_len,   31
 .equ desc_len,      110
 
 .text
 .global _room3
 
 _room3:
+
     LDR R1, =welcome
     MOV R2, #welcome_len
-    MOV R3, #welcome_style
-    BL  _ui_render_message
+    BL  _ui_render_welcome
 
     BL	_increment_turn
 

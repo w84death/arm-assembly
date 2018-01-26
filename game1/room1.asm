@@ -12,21 +12,19 @@
 .data
 .equ cmd_mask,      38  @ west/east/look
 welcome:
-.string "\nYou are in the - Main Cave -\n"
+.string "You are in the - Main Cave -\n"
 description:
 .string "\nYou are in a relatevely samall cave.\nYou see two exits.\nYou can go [west] or [east].\n"
-.equ welcome_len,   30
+.equ welcome_len,   29
 .equ desc_len,      86
 
 .text
 .global _room1
 
 _room1:
-
     LDR R1, =welcome
     MOV R2, #welcome_len
-    MOV R3, #welcome_style
-    BL  _ui_render_message
+    BL _ui_render_welcome
 
     BL	_increment_turn
 

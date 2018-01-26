@@ -13,12 +13,12 @@
 .equ cmd_mask,          48  @ south/look
 
 welcome:
-.string "\nRoom #6\n"
+.string "Room #6\n"
 description:
 .string "\nLorem Ipsum.\n"
 description2:
 .string "\nDolor sid amet.\n"
-.equ welcome_len,    9
+.equ welcome_len,    8
 .equ desc_len,       14
 .equ desc2_len,      17
 
@@ -28,8 +28,7 @@ description2:
 _room6:
     LDR R1, =welcome
     MOV R2, #welcome_len
-    MOV R3, #welcome_style
-    BL  _ui_render_message
+    BL  _ui_render_welcome
 
     BL	_increment_turn
 

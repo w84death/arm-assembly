@@ -7,13 +7,21 @@
 @
 @ ---------------------------------------------------
 .arm
+.include "globals.asm"
 
 .data
-num: .ascii " "
+.align 4
+num: .string " "
+.align 4
+divider: .string "="
+.align 4
+new_line: .string "\n"
 
 .text
 .global _ui_render_message
 .global _ui_render_turn
+.global _ui_render_divider
+.global _ui_render_welcome
 
 _ui_render_message:
     PUSH {R1-R2, LR}
@@ -26,7 +34,7 @@ _ui_render_message:
 	MOV R7, #4
 	SWI 0					@ print text
 
-    MOV R1, #2 				@ clear color
+    MOV R1, #ui_cc
     BL _ui_term
 
 	POP {LR}
@@ -35,14 +43,57 @@ _ui_render_message:
 _ui_render_turn:
 	PUSH {LR}
 
-	BL 	_get_turn			@ R0 turn number
-	ADD R0, #48				@ R0 ascii code
+	BL 	_get_turn
+	ADD R0, #48
 	LDR R1, =num
 	STR R0, [R1]
 
     MOV R2, #1
-    MOV R3, #32             @ white
+    MOV R3, #ui_white
     BL  _ui_render_message
+
+	POP {LR}
+	BX LR
+
+_ui_render_divider:
+	PUSH {LR}
+
+	BL 	_get_width
+	MOV R1, #0
+	PUSH {R0, R1}
+
+	_divider_loop:
+
+	LDR R1, =divider
+	MOV R2, #1
+    MOV R3, #ui_blue
+    BL  _ui_render_message
+
+	POP {R0, R1}
+	ADD R1, #1
+	CMP R1, R0
+	PUSHLT {R0, R1}
+	BLT _divider_loop
+
+	LDR R1, =new_line
+	MOV R2, #1
+    MOV R3, #ui_cc
+    BL  _ui_render_message
+
+	POP {LR}
+	BX LR
+
+_ui_render_welcome:
+	PUSH {R1-R2, LR}
+
+    BL _clear_screen
+    BL _ui_render_divider
+
+	POP {R1-R2}
+    MOV R3, #welcome_style
+    BL  _ui_render_message
+
+	BL _ui_render_divider
 
 	POP {LR}
 	BX LR

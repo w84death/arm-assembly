@@ -7,10 +7,15 @@
 @
 @ ---------------------------------------------------
 .arm
+.include "globals.asm"
 
 .data
-game_over: .string "\nYou did not escape. You are dead... GAME OVER\n"
-quit: .string "\nThank you for playing,\nP1X\n\n"
+game_over:
+.string "\nYou did not escape. You are dead... GAME OVER\n"
+quit:
+.string "\nThank you for playing,\nP1X\n\n"
+.equ over_len,      45
+.equ quit_len,      29
 
 .text
 .global _game_over
@@ -18,14 +23,16 @@ quit: .string "\nThank you for playing,\nP1X\n\n"
 
 _game_over:
     LDR R1, =game_over
-    MOV R2, #45
-    MOV R3, #4             @ red
+    MOV R2, #over_len
+    MOV R3, #ui_red
     BL  _ui_render_message
 
 _quit:
+    BL  _ui_render_divider
+
     LDR R1, =quit
-    MOV R2, #29
-    MOV R3, #32             @ white
+    MOV R2, #quit_len
+    MOV R3, #ui_white
     BL  _ui_render_message
 
     MOV R7, #1

@@ -25,6 +25,7 @@ color_white:
 
 .text
 .global _ui_term
+.global _clear_screen
 
 _ui_term:
     PUSH {LR}

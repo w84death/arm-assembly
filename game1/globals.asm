@@ -11,7 +11,7 @@
 .data
 
 @ text styles
-.equ welcome_style, 9   @ clear screen + green
+.equ welcome_style, 32   @ clear screen + green
 .equ desc_style, 	16  @ blue
 .equ info_style,    8   @ green
 

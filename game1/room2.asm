@@ -13,14 +13,14 @@
 .equ cmd_mask,      38  @ west/east/look
 .equ trigger_turn,  8
 welcome:
-.string "\nThis particular cave is named - Old Spider - guess why?\n"
+.string "This particular cave is named - Old Spider - guess why?\n"
 description:
 .string "\nYou enter another cave. This one is smaller.\nYou see spider crawling next to you..\nThere is a path on [west] site but the spider is looking dangerous.\n"
 description2:
 .string "\nThe spider has gone. You see path on the [west] site.\n"
 spider_attack:
 .string "\nSpider jumps on to your head and bite you right in the neck...\n"
-.equ welcome_len,   57
+.equ welcome_len,   56
 .equ desc_len,      152
 .equ desc2_len,     55
 .equ spider_len,    62
@@ -31,8 +31,7 @@ spider_attack:
 _room2:
     LDR R1, =welcome
     MOV R2, #welcome_len
-    MOV R3, #welcome_style
-    BL  _ui_render_message
+    BL  _ui_render_welcome
 
     BL	_increment_turn
 
@@ -44,7 +43,7 @@ _skip_welcome:
     CMP R0, #cmd_west
     BEQ _try_room4
 
-    CMP R0, #cmd_sout
+    CMP R0, #cmd_east
     BEQ _room1
 
     CMP R0, #cmd_look
