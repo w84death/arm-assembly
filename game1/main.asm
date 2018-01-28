@@ -14,6 +14,8 @@
 turn: .word 0
 .balign 4
 width: .word 80
+.balign 4
+room_states: .word 0
 input: .string "1234567812345678"
 intro:
 .string "Raspberry Pi / ARM Assembly GAME#1 by KJ/P1X\nVER: beta1\n"
@@ -30,6 +32,8 @@ press_enter:
 .global _increment_turn
 .global _get_turn
 .global _get_width
+.global _get_room_state
+.global _set_room_state
 
 _start:
 	@ LDR R1, [SP, #8]
@@ -85,5 +89,25 @@ _get_turn:
 _get_width:
 	LDR R0, =width
 	LDR R0, [R0]
+
+	BX 	LR
+
+_get_room_state:
+	@ MOV R0, #bit-mask
+	LDR R1, =room_states
+	LDR R1, [R1]
+	AND R2, R1, R0
+	CMP R2, R0
+	MOVEQ R0, #1
+	MOVNE R0, #0
+
+	BX LR
+
+_set_room_state:
+	@ MOV R0, #bit-mask
+	LDR R1, =room_states
+	LDR R2, [R1]
+	EOR R3, R2, R0
+	STR R3, [R1]
 
 	BX 	LR

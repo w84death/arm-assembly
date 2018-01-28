@@ -11,16 +11,17 @@
 
 .data
 .equ cmd_mask,          58  @ west/north/south/look
+.equ room_mask,         0x8
 
 welcome:
-.string "Room #4\n"
+.string "The - Intersection Cave -\n"
 description:
-.string "\nLorem Ipsum.\n"
+.string "\nYou see rumors all over the place.\nYou still can go to [north]/[west] and [south].\n"
 description2:
-.string "\nDolor sid amet.\n"
-.equ welcome_len,    8
-.equ desc_len,       14
-.equ desc2_len,      17
+.string "\nRight after you came to this cave you hear a big bum!\nThe path has demolished. You can't go back\n"
+.equ welcome_len,   26
+.equ desc_len,      84
+.equ desc2_len,    98
 
 .text
 .global _room4
@@ -54,10 +55,10 @@ _skip_welcome:
 _look:
     BL	_increment_turn
 
-    @ BL  _get_room_triggers
-    @ AND R0, R1
-    @ CMP R0, #8
-    @ BGT _post_trigger
+    MOV R0, #room_mask
+    BL  _get_room_state
+    CMP R0, #0
+    BEQ _post_trigger
 
     LDR R1, =description
     MOV R2, #desc_len
@@ -71,5 +72,8 @@ _post_trigger:
     MOV R2, #desc2_len
     MOV R3, #desc_style
     BL  _ui_render_message
+
+    MOV R0, #room_mask
+    BL _set_room_state
 
     B   _skip_welcome
