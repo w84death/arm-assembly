@@ -25,16 +25,21 @@ commands:			@ mem.	mask
 .align
 input: .ascii "1234567812345678"
 .equ input_len, 16
-prompt: .string "-> "
-.equ prompt_len, 3
-unknown: .string "\nThis does nothing.\n"
-.equ unknown_len, 20
-unavailable: .string "\nYou can not do that.\n"
-.equ unavailable_len, 22
-rest: .string "\nYou rested for one turn. You feel refreshed.\n"
-.equ rest_len, 46
-help: .string "\nYou can use those commands: [quit] [north] [south] [west] [east] [look] [rest]\n"
-.equ help_len, 80
+prompt:
+	.string "-> "
+	.equ prompt_len, .-prompt
+unknown:
+	.string "\nThis does nothing.\n"
+	.equ unknown_len, .-unknown
+unavailable:
+	.string "\nYou can not do that.\n"
+	.equ unavailable_len, .-unavailable
+rest:
+	.string "\nYou rested for one turn. You feel refreshed.\n"
+	.equ rest_len, .-rest
+help:
+	.string "\nYou can use those commands: [quit] [north] [south] [west] [east] [look] [rest]\n"
+	.equ help_len, .-help
 
 .text
 .global _prompt
