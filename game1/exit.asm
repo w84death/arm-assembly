@@ -11,11 +11,11 @@
 
 .data
 welcome:
-.string "Light! Bright flash!\n"
+    .string "Light! Bright flash!\n"
+    .equ welcome_len, .-welcome
 description:
-.string "\nCongratulation! You escape form the cave!\nYour signifficant other is waiting for you..\n"
-.equ welcome_len,    21
-.equ desc_len,       89
+    .string "\nCongratulation! You escape form the cave!\nYour signifficant other is waiting for you..\n"
+    .equ desc_len, .-description
 
 .text
 .global _exit

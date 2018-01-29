@@ -23,6 +23,12 @@ color_blue:
 color_white:
     .ascii "\033[1;37m"     @ 32 - white
 
+@ \033[X;Yf -goto x/y
+@ \033[T;Br -set window top/bottom
+@ \033[6n - get pos
+@ \033[?9h - mouse on (value+040)
+@ \033[?9l - mouse off
+
 .text
 .global _ui_term
 .global _clear_screen

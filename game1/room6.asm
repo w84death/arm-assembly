@@ -13,14 +13,14 @@
 .equ cmd_mask,          48  @ south/look
 
 welcome:
-.string "Room #6\n"
+    .string "Room #6\n"
+    .equ welcome_len, .-welcome
 description:
-.string "\nLorem Ipsum.\n"
+    .string "\nLorem Ipsum.\n"
+    .equ desc_len, .-description
 description2:
-.string "\nDolor sid amet.\n"
-.equ welcome_len,    8
-.equ desc_len,       14
-.equ desc2_len,      17
+    .string "\nDolor sid amet.\n"
+    .equ desc2_len, .-description2
 
 .text
 .global _room6

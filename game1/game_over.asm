@@ -11,11 +11,11 @@
 
 .data
 game_over:
-.string "\nYou did not escape. You are dead... GAME OVER\n"
+    .string "\nYou did not escape. You are dead... GAME OVER\n"
+    .equ over_len, .-game_over
 quit:
-.string "\nThank you for playing,\nP1X\n\n"
-.equ over_len,      47
-.equ quit_len,      29
+    .string "\nThank you for playing,\nP1X\n\n"
+    .equ quit_len, .-quit
 
 .text
 .global _game_over

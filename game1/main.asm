@@ -18,14 +18,14 @@ width: .word 80
 room_states: .word 0
 input: .string "1234567812345678"
 intro:
-.string "Raspberry Pi / ARM Assembly GAME#1 by KJ/P1X\nVER: beta1\n"
+	.string "Raspberry Pi / ARM Assembly GAME#1 by KJ/P1X\nVER: beta1\n"
+	.equ intro_len, .-intro
 welcome:
-.string "You are in the cave.\nYou only have one torch that is slowly dimming.\nYou need to get out fast! you have 12 moves to get out of the cave.\n"
+	.string "You are in the cave.\nYou only have one torch that is slowly dimming.\nYou need to get out fast! you have 12 moves to get out of the cave.\n"
+	.equ welcome_len, .-welcome
 press_enter:
-.string "PRESS ENTER TO START GAME "
-.equ intro_len, 	56
-.equ welcome_len, 	137
-.equ press_len, 	26
+	.string "PRESS ENTER TO START GAME "
+	.equ press_len, .-press_enter
 
 .text
 .global _start
