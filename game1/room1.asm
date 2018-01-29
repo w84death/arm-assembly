@@ -12,11 +12,11 @@
 .data
 .equ cmd_mask,      38  @ west/east/look
 welcome:
-.string "You are in the - Main Cave -\n"
+    .string "You are in the - Main Cave -\n"
+    .equ welcome_len, .-welcome
 description:
-.string "\nYou are in a relatevely samall cave.\nYou see two exits.\nYou can go [west] or [east].\n"
-.equ welcome_len,   29
-.equ desc_len,      86
+    .string "\nYou are in a relatevely samall cave.\nYou see two exits.\nYou can go [west] or [east].\n"
+    .equ desc_len, .-description
 
 .text
 .global _room1

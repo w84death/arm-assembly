@@ -14,14 +14,14 @@
 .equ room_mask,         0x8
 
 welcome:
-.string "The - Intersection Cave -\n"
+    .string "The - Intersection Cave -\n"
+    .equ welcome_len, .-welcome
 description:
-.string "\nYou see rumors all over the place.\nYou still can go to [north]/[west] and [south].\n"
+    .string "\nYou see rumors all over the place.\nYou still can go to [north]/[west] and [south].\n"
+    .equ desc_len, .-description
 description2:
-.string "\nRight after you came to this cave you hear a big bum!\nThe path has demolished. You can't go back\n"
-.equ welcome_len,   26
-.equ desc_len,      84
-.equ desc2_len,    98
+    .string "\nRight after you came to this cave you hear a big bum!\nThe path has demolished. You can't go back\n"
+.equ desc2_len, .-description2
 
 .text
 .global _room4

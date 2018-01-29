@@ -13,17 +13,17 @@
 .equ cmd_mask,      38  @ west/east/look
 .equ trigger_turn,  8
 welcome:
-.string "This particular cave is named - Old Spider - guess why?\n"
+    .string "This particular cave is named - Old Spider - guess why?\n"
+    .equ welcome_len, .-welcome
 description:
-.string "\nYou enter another cave. This one is smaller.\nYou see spider crawling next to you..\nThere is a path on [west] site but the spider is looking dangerous.\n"
+    .string "\nYou enter another cave. This one is smaller.\nYou see spider crawling next to you..\nThere is a path on [west] site but the spider is looking dangerous.\n"
+    .equ desc_len, .-description
 description2:
-.string "\nThe spider has gone. You see path on the [west] site.\n"
+    .string "\nThe spider has gone. You see path on the [west] site.\n"
+    .equ desc2_len, .-description2
 spider_attack:
-.string "\nSpider jumps on to your head and bite you right in the neck...\n"
-.equ welcome_len,   56
-.equ desc_len,      152
-.equ desc2_len,     55
-.equ spider_len,    62
+    .string "\nSpider jumps on to your head and bite you right in the neck...\n"
+.equ spider_len, .-spider_attack
 
 .text
 .global _room2
